@@ -68,9 +68,9 @@ EOF
     fi
     # 导出
     install -Dm644 ./proot $PROJ_OUT/bin/$arch/proot
-    install -Dm644 ./loader/loader $PROJ_OUT/bin/$arch/libloader.so
+    install -Dm644 ./loader/loader $PROJ_OUT/lib/$arch/libloader.so
     if [ -e ./loader/loader-m32 ]; then
-     install -Dm644 ./loader/loader-m32 $PROJ_OUT/bin/$arch/libloader32.so
+     install -Dm644 ./loader/loader-m32 $PROJ_OUT/lib/$arch/libloader32.so
     fi
     # 清理
     make clean

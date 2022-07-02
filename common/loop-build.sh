@@ -38,6 +38,9 @@ for arch in $ALL_ARCH; do
     if [ ! -d $PROJ_OUT/bin/$arch ]; then
       mkdir -p $PROJ_OUT/bin/$arch
     fi
+    if [ ! -d $PROJ_OUT/lib/$arch ]; then
+      mkdir -p $PROJ_OUT/lib/$arch
+    fi
     #设置工具链
     . $PROJ_ROOT/build/common/env-utils.sh setenv
     echo "===== $PKG build for $arch platform start ====="
