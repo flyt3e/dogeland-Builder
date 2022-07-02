@@ -11,7 +11,6 @@ for pkg_sh in build/steps/*
     . $pkg_sh
     echo "==> 正在编译"
     . build/common/loop-build.sh
-
     unset PKG
     cd $PROJ_ROOT
     . build/common/env-utils.sh unsetenv

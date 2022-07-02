@@ -3,7 +3,7 @@
 set -e
 
 ##### prepare sources #####
-cd $PROJ_SRC
+#cd $PROJ_SRC
 # 软件包配置中是否给到资源URL
 #if [ $PKG_URL ];then
 #	echo "Downloading $PKG sources"
@@ -39,11 +39,11 @@ for arch in $ALL_ARCH; do
       mkdir -p $PROJ_OUT/bin/$arch
     fi
     #设置工具链
-    . $PROJ_ROOT/build/env-utils.sh setenv
+    . $PROJ_ROOT/build/common/env-utils.sh setenv
     echo "===== $PKG build for $arch platform start ====="
     # 调用包配置中编译命令
     build
     echo "===== $PKG build for $arch platform done ====="
     # 清除环境，等待下一编译任务
-    . $PROJ_ROOT/build/env-utils.sh unsetenv
+    . $PROJ_ROOT/build/common/env-utils.sh unsetenv
 done
