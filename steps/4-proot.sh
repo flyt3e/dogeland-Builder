@@ -8,6 +8,7 @@ build(){
      exit 255
     fi
     # 编译libtalloc
+    chmod -R +x ./
     cd talloc-2.3.3
 
     tee cross-answers.txt << EOF > /dev/null
