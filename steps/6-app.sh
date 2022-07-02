@@ -9,10 +9,14 @@ else
  cp $PROJ_ROOT/toolkit/toolkit.sh $PROJ_ROOT/app/app/src/main/assets/Toolkit/
  for arch in aarch64 arm x86_64; do
   if [[ "$arch" = "aarch64" ]];then
+   mv $PROJ_OUT/bin/aarch64  $PROJ_OUT/bin/aa64
+   mv $PROJ_OUT/lib/aarch64  $PROJ_OUT/lib/aa64
    unset arch
    export arch=aa64
   fi
   if [[ "$arch" = "x86_64" ]];then
+   mv $PROJ_OUT/bin/x86_64  $PROJ_OUT/bin/x64
+   mv $PROJ_OUT/lib/x86_64  $PROJ_OUT/lib/x64
    unset arch
    export arch=x64
   fi
