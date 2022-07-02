@@ -34,14 +34,15 @@ cd $PKG_SRC
 
 # 循环多架构编译
 for arch in $ALL_ARCH; do
-     # 创建导出目录
-     if [ ! -d $PROJ_OUT/bin/$arch ]; then
+    # 创建导出目录
+    if [ ! -d $PROJ_OUT/bin/$arch ]; then
       mkdir -p $PROJ_OUT/bin/$arch
     fi
     #设置工具链
     . $PROJ_ROOT/build/common/env-utils.sh setenv
     echo "===== $PKG build for $arch platform start ====="
     # 调用包配置中编译命令
+    cd $PKG_SRC
     build
     echo "===== $PKG build for $arch platform done ====="
     # 清除环境，等待下一编译任务
