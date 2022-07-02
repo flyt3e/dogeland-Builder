@@ -1,18 +1,18 @@
-. scripts/build-configs.sh
-if [ ! -d $BUILDER_OUT ]; then
-mkdir -p $BUILDER_OUT
+# 加载主要编译配置
+. build/build-configs.sh
+# 创建输出目录
+if [ ! -d $PROJ_OUT ]; then
+mkdir -p $PROJ_OUT/bin
 fi
-if [ ! -d $BUILDER_SRC ]; then
-mkdir -p $BUILDER_SRC
-fi
-for pkg_sh in pkgs/*
+# 循环加载目标编译配置
+for pkg_sh in build/steps/*
  do
-    echo "==> Loading $pkg_sh"
+    echo "==> 正在加载 $pkg_sh"
     . $pkg_sh
-    echo "==> Starting Builder"
-    . scripts/loop-build.sh
+    echo "==> 正在编译"
+    . build/common/loop-build.sh
+
     unset PKG
-    unset PKG_URL
-    cd $BUILDER_ROOT
-    . scripts/clean-env.sh
+    cd $PROJ_ROOT
+    . build/common/env-utils.sh unsetenv
 done

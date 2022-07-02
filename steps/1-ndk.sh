@@ -3,7 +3,7 @@ build(){
 if [ -d $NDK ]; then
       echo 'skipping download'
 else
- cd $BUILDER_SRC
+ cd $PROJ_SRC
  echo "Downloading Android NDK ${NDK_VER}"
  case "$(uname)" in
  Linux)
@@ -13,11 +13,11 @@ else
      HOST_TAG='darwin'
      ;;
  *)
-     HOST_TAG='linux'
+     HOST_TAG='unknown'
      ;;
  esac
  # if you have already downloaded Android NDK
- # please edit NDK at scripts/build-configs.sh and comment the lines here
+ # please edit NDK at build/build-configs.sh
  curl -#LOC - "https://dl.google.com/android/repository/android-ndk-${NDK_VER}-${HOST_TAG}.zip"
  unzip -oq "android-ndk-${NDK_VER}-${HOST_TAG}.zip"
 fi

@@ -1,5 +1,8 @@
 # this file should be sourced and not executed
 
+
+
+setenv(){
 ##### Android NDK #####
 # https://developer.android.com/ndk/guides/other_build_systems
 # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md
@@ -52,31 +55,6 @@ if [ -z "$OLDPATH" ]; then
     export OLDPATH="$PATH"
 fi
 export PATH="${TOOLCHAIN}/bin:${PATH}"
-
-#
-# Old NDK
-#
-
-#export ADDR2LINE="${TARGET}-addr2line"
-#export AR="${TARGET}-ar"
-#export AS="${TARGET}-as"
-#export CXXFILT="${TARGET}-c++filt"
-#export DWP="${TARGET}-dwp"
-#export ELFEDIT="${TARGET}-elfedit"
-#export GPROF="${TARGET}-gprof"
-#export LD="${TARGET}-ld"
-#export STRINGS="${TARGET}-strings"
-#export NM="${TARGET}-nm"
-#export OBJCOPY="${TARGET}-objcopy"
-#export OBJDUMP="${TARGET}-objdump"
-#export RANLIB="${TARGET}-ranlib"
-#export SIZE="${TARGET}-size"
-#export READELF="${TARGET}-readelf"
-#export STRIP="${TARGET}-strip"
-
-#
-# New NDK
-#
 
 export ADDR2LINE="llvm-addr2line"
 export AR="llvm-ar"
@@ -131,3 +109,42 @@ fi
 if [ ! -d "$TOOLCHAIN" ]; then
     echo 'WARN: $TOOLCHAIN path does not exist!'
 fi
+}
+
+unsetenv(){
+if [ -n "$OLDPATH" ]; then
+    export PATH="$OLDPATH"
+fi
+#grep 'export ' $PROJ_ROOT/set-env.sh | sed -e 's/    //g' | sed -e 's/grep.*//g' | sed -e 's/export /unset /g' | sed -e 's/unset PATH.*//g' | sed -e 's/=.*//g' | sort | uniq | uniq -u > oldenv
+#. ./oldenv && rm oldenv
+
+unset ABI
+unset ADDR2LINE
+unset API
+unset AR
+unset AS
+unset ASMFLAGS
+unset CC
+unset CFLAGS
+unset CXX
+unset CXXFILT
+unset CXXFLAGS
+unset DWP
+unset HOST_TAG
+unset LD
+unset NM
+unset OBJCOPY
+unset OBJDUMP
+unset OLDPATH
+unset RANLIB
+unset READELF
+unset SIZE
+unset STRINGS
+unset STRIP
+unset TARGET
+unset TOOLCHAIN
+unset arch
+
+}
+
+$@

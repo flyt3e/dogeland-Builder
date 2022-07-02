@@ -1,15 +1,13 @@
 PKG="proot"
-PKG_URL="https://github.com/termux/proot/archive/refs/heads/master.tar.gz"
-PKG_FILE="master.tar.gz"
-PKG_SRC="$BUILDER_SRC/proot-master/"
+PKG_SRC="$PROJ_SRC/proot/"
 build(){
     if [ -d talloc-2.3.3/ ]; then
       echo "skipping download libtalloc"
     else
-     echo "Downloading libtalloc"
-     curl -#LOC - https://www.samba.org/ftp/talloc/talloc-2.3.3.tar.gz
-     tar xf talloc-2.3.3.tar.gz
+     echo "NEED libtalloc!"
+     exit 255
     fi
+    # 编译libtalloc
     cd talloc-2.3.3
 
     tee cross-answers.txt << EOF > /dev/null
@@ -48,14 +46,16 @@ EOF
     
     make clean
     make install
-    
+    # 导出静态库
     # libtalloc doesn't build static libraries automatically yet
     cd ./bin/default
     $AR rcu libtalloc.a talloc*.o
     install -Dm644 libtalloc.a $PKG_SRC/
+    
+    # 清理libtalloc
     cd $PKG_SRC/talloc-2.3.3
     make clean
-    
+    # 编译proot
     cd $PKG_SRC/src
     make clean
     make V=1 CFLAGS="$CFLAGS -I$PKG_SRC/talloc-2.3.3/include" LDFLAGS="$LDFLAGS $PKG_SRC/libtalloc.a"
@@ -65,12 +65,13 @@ EOF
     if [ -e ./loader/loader-m32 ]; then
      $STRIP ./loader/loader-m32
     fi
-    
-    install -Dm644 ./proot $BUILDER_OUT/proot_$arch
-    install -Dm644 ./loader/loader $BUILDER_OUT/libloader.so_$arch
+    # 导出
+    install -Dm644 ./proot $PROJ_OUT/bin/$arch/proot
+    install -Dm644 ./loader/loader $PROJ_OUT/bin/$arch/libloader.so
     if [ -e ./loader/loader-m32 ]; then
-     install -Dm644 ./loader/loader-m32 $BUILDER_OUT/libloader32.so_$arch
+     install -Dm644 ./loader/loader-m32 $PROJ_OUT/bin/$arch/libloader32.so
     fi
+    # 清理
     make clean
     rm $PKG_SRC/libtalloc.a
 }
