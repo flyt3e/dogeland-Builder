@@ -37,7 +37,7 @@ Checking for HAVE_MREMAP: OK
 Checking for HAVE_INCOHERENT_MMAP: OK
 Checking getconf large file support flags work: OK
 EOF
-
+    chmod +x  ./configure
     ./configure --prefix="./" \
                 --cross-compile \
                 --cross-answers=cross-answers.txt  \
